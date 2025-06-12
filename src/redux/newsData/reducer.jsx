@@ -1,13 +1,22 @@
-import { LATEST_NEWS } from "./actionType";
+import * as NEWS from "./actionType";
 
-const initialState = {}
+const initialState = {
+    loading: false,
+    error: ''
+}
 
 export default (state = initialState, action) => {
     switch (action.type){
-        case 'LATEST_NEWS': {
+        case NEWS.LATEST_NEWS: {
             return {
                 ...state,
                 latestNews: action.payload
+            }
+        }
+        case NEWS.LATEST_NEWS_REQUEST: {
+            return {
+                ...state,
+                
             }
         }
         default:
