@@ -1,13 +1,16 @@
-import React,{useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {newsSelectors} from '../redux/newsData';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { newsSelectors } from '../redux/newsData';
 import {
-    getLatestNews
+    getLatestNews,
+    getArticleNews,
+    getGalleryNews
 } from '../services/getNewsData';
 import { cakeActions } from '../redux/cake';
 
 import LatestDisplay from '../component/Home/LatestDisplay.jsx';
 import ArticleDisplay from '../component/Home/ArticleDisplay.jsx'
+import GalleryDisplay from '../component/Home/GalleryDisplay.jsx'
 
 const Home = () => {
 
@@ -16,24 +19,26 @@ const Home = () => {
     //call action
     useEffect(() => {
         dispatch(getLatestNews())
-        //dispatch(getArticleNews())
-        dispatch(cakeActions())
-    },[])
+        dispatch(getArticleNews())
+        dispatch(cakeActions());
+        dispatch(getGalleryNews());
+    }, [])
 
     //get State
-    const latestNewslist = useSelector(newsSelectors.getLatestNews)
+    const latestNewslist = useSelector(state => state.newsData.data);
 
     const numOfCakes = useSelector(state => state.cake.numOfCakes);
-    
-    /* const articleNewslist = useSelector(
-        newsSelectors.getArticleNews
-    ) */
 
-    return(
+    const articleNewslist = useSelector(state => state.newsData.data);
+
+    const galleries = useSelector(state => state.newsData.galleryData)
+
+    return (
         <>
-            <LatestDisplay ldata={latestNewslist?.data}/>
+            <LatestDisplay ldata={latestNewslist} />
             <p>Number of cakes: {numOfCakes}</p>
-            {/* <ArticleDisplay adata={articleNewslist?.data}/> */}
+            <ArticleDisplay adata={articleNewslist}/>
+            <GalleryDisplay adata={galleries} />
         </>
     )
 

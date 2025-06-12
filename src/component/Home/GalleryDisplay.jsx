@@ -10,13 +10,14 @@ var settings = {
     slidesToScroll: 1
   };
 
-const showGallery = ({gdata}) =>{
-    if(gdata){
+const showGallery = (gdata) =>{
+    const gd = gdata;
+    if(gd){
         return(
             <Slider {...settings}>
-                {gdata.map((item) => {
+                {gd.map((item) => {
                     return(
-                        <Link to='/' className="slider-item">
+                        <Link key={Math.random(1)} to='/' className="slider-item">
                             <div className="image" style={{background:`url(/images/galleries/${item.images[0].img})`}}></div>
                         </Link>
                     )
@@ -30,7 +31,7 @@ const GalleryDisplay = (props) => {
     return(
         <div className="home-gallery">
             <h2>Image Gallery</h2>
-                {showGallery(props)}
+                {showGallery(props.adata)}
         </div>
     )
 }
